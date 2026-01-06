@@ -117,6 +117,14 @@
                 <a href="{{ route('admin.order.transactions.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.order.transactions.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
                     Transactions
                 </a>
+
+                <div class="pt-4 pb-2">
+                    <p class="px-4 text-xs font-bold text-secondary uppercase tracking-wider">Content</p>
+                </div>
+
+                <a href="{{ route('admin.reviews.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.reviews.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
+                    Review Moderation
+                </a>
             </nav>
         </div>
 
