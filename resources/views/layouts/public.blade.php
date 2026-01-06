@@ -18,6 +18,44 @@
         }
     }
 }" x-init="init()" :class="theme">
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('wishlist', () => ({ 
+            async toggle(productId, buttonElement) {
+                @guest('customer')
+                    window.location.href = "{{ route('customer.login') }}";
+                    return;
+                @endguest
+
+                try {
+                    const response = await fetch("{{ route('wishlist.toggle') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ product_id: productId })
+                    });
+                    
+                    if (response.status === 401) {
+                         window.location.href = "{{ route('customer.login') }}";
+                         return;
+                    }
+
+                    const data = await response.json();
+                    
+                    // Dispatch custom event for UI updates
+                    window.dispatchEvent(new CustomEvent('wishlist-updated', { 
+                        detail: { productId: productId, status: data.status } 
+                    }));
+
+                } catch (error) {
+                    console.error('Error toggling wishlist:', error);
+                }
+            }
+        }))
+    })
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
