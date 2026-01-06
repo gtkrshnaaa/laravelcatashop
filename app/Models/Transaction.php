@@ -13,6 +13,7 @@ class Transaction extends Model
         'invoice_code',
         'customer_info',
         'payment_method',
+        'payment_proof_path',
         'unique_code',
         'amount_subtotal',
         'amount_total',
