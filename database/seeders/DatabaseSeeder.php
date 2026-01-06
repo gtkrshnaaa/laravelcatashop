@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             // Transaction and reviews (depend on products & customers)
             TransactionSeeder::class,
             ReviewSeeder::class,
+            TagSeeder::class,
         ]);
     }
 }
