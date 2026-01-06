@@ -21,6 +21,9 @@ class Product extends Model
         'stock_control',
         'images',
         'is_active',
+        'discount_percentage',
+        'discount_start',
+        'discount_end',
     ];
 
     protected $casts = [
@@ -29,6 +32,9 @@ class Product extends Model
         'stock_control' => 'boolean',
         'is_active' => 'boolean',
         'images' => 'array',
+        'discount_percentage' => 'decimal:2',
+        'discount_start' => 'datetime',
+        'discount_end' => 'datetime',
     ];
 
     /**
