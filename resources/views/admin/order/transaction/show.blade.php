@@ -60,6 +60,17 @@
                         <p class="text-sm text-secondary">{{ $transaction->notes }}</p>
                     </div>
                 @endif
+
+                <!-- Payment Proof -->
+                @if($transaction->payment_proof_path)
+                    <div class="bg-surface border border-border rounded-xl p-6">
+                        <h3 class="font-bold text-primary mb-4">Payment Proof</h3>
+                        <a href="{{ Storage::url($transaction->payment_proof_path) }}" target="_blank" class="block">
+                            <img src="{{ Storage::url($transaction->payment_proof_path) }}" alt="Payment Proof" class="w-full rounded-lg border border-border hover:opacity-90 transition-opacity">
+                        </a>
+                        <p class="text-xs text-secondary mt-2 text-center">Click image to view full size</p>
+                    </div>
+                @endif
             </div>
 
             <!-- Status & Actions -->
