@@ -21,11 +21,22 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@laravelcatashop.test',
         ]);
 
-        // Seed categories and products
+        // Seed in dependency order
         $this->call([
+            // Core data
             CategorySeeder::class,
             ProductSeeder::class,
             CustomerSeeder::class,
+            
+            // Feature data
+            CouponSeeder::class,
+            PostSeeder::class,
+            PageSeeder::class,
+            BannerSeeder::class,
+            
+            // Transaction and reviews (depend on products & customers)
+            TransactionSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }
