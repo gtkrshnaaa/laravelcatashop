@@ -125,6 +125,9 @@
                 <a href="{{ route('admin.reviews.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.reviews.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
                     Review Moderation
                 </a>
+                <a href="{{ route('admin.banners.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.banners.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
+                    Banners
+                </a>
             </nav>
         </div>
 

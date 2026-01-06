@@ -115,5 +115,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/{review}/reject', [ReviewModerationController::class, 'reject'])->name('reject');
             Route::delete('/{review}', [ReviewModerationController::class, 'destroy'])->name('destroy');
         });
+
+        // Banner Management Routes
+        Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
     });
 });
