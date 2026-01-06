@@ -60,11 +60,29 @@
                     </div>
                 @endif
 
-                <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
-                    <p class="text-sm text-blue-400">
-                        <strong>Note:</strong> This is a demo e-commerce site. Cart and checkout features are not yet implemented.
-                    </p>
-                </div>
+                <!-- Add to Cart Form -->
+                @if($product->stock_control && $product->stock < 1)
+                    <div class="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                        <p class="text-sm text-red-400">
+                            <strong>Out of Stock:</strong> This product is currently unavailable.
+                        </p>
+                    </div>
+                @else
+                    <form action="{{ route('cart.add', $product) }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label for="quantity" class="block text-sm font-medium text-secondary mb-2">Quantity</label>
+                            <div class="flex gap-4">
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" 
+                                    @if($product->stock_control) max="{{ $product->stock }}" @endif
+                                    class="w-24 bg-background border border-border rounded-lg px-4 py-3 text-primary text-center focus:ring-1 focus:ring-primary focus:border-primary transition-colors outline-none">
+                                <button type="submit" class="flex-1 bg-primary text-background px-8 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                @endif
             </div>
         </div>
 
