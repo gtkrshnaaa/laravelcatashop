@@ -88,6 +88,18 @@
             <div class="hidden md:flex items-center gap-8">
                 <a href="{{ route('home') }}" class="text-sm font-medium {{ request()->routeIs('home') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors">Home</a>
                 <a href="{{ route('catalog.index') }}" class="text-sm font-medium transition-colors hover:text-primary {{ request()->routeIs('catalog.*') ? 'text-primary' : 'text-secondary' }}">Catalog</a>
+                <a href="{{ route('cart.index') }}" class="text-sm font-medium transition-colors hover:text-primary {{ request()->routeIs('cart.*') ? 'text-primary' : 'text-secondary' }}">Cart</a>
+                
+                @auth('customer')
+                    <a href="{{ route('customer.dashboard') }}" class="text-sm font-medium transition-colors hover:text-primary {{ request()->routeIs('customer.dashboard') ? 'text-primary' : 'text-secondary' }}">My Account</a>
+                    <form action="{{ route('customer.logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="text-sm font-medium text-secondary hover:text-primary transition-colors">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('customer.login') }}" class="text-sm font-medium transition-colors hover:text-primary {{ request()->routeIs('customer.login') ? 'text-primary' : 'text-secondary' }}">Login</a>
+                    <a href="{{ route('customer.register') }}" class="text-sm font-medium transition-colors hover:text-primary {{ request()->routeIs('customer.register') ? 'text-primary' : 'text-secondary' }}">Register</a>
+                @endauth
                 
                 <!-- Theme Toggle -->
                 <button @click="toggleTheme()" class="text-secondary hover:text-primary transition-colors">
@@ -117,6 +129,18 @@
         >
             <a href="{{ route('home') }}" class="text-sm font-medium {{ request()->routeIs('home') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors py-2">Home</a>
             <a href="{{ route('catalog.index') }}" class="text-sm font-medium {{ request()->routeIs('catalog.*') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors py-2">Catalog</a>
+            <a href="{{ route('cart.index') }}" class="text-sm font-medium {{ request()->routeIs('cart.*') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors py-2">Cart</a>
+            
+            @auth('customer')
+                <a href="{{ route('customer.dashboard') }}" class="text-sm font-medium {{ request()->routeIs('customer.dashboard') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors py-2">My Account</a>
+                <form action="{{ route('customer.logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="text-sm font-medium text-secondary hover:text-primary transition-colors py-2 text-left w-full">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('customer.login') }}" class="text-sm font-medium {{ request()->routeIs('customer.login') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors py-2">Login</a>
+                <a href="{{ route('customer.register') }}" class="text-sm font-medium {{ request()->routeIs('customer.register') ? 'text-primary' : 'text-secondary hover:text-primary' }} transition-colors py-2">Register</a>
+            @endauth
             
             <div class="flex items-center justify-between pt-2 border-t border-border">
                 <span class="text-xs font-mono text-secondary">Theme</span>
