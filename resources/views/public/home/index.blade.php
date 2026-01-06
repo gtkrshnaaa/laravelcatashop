@@ -45,20 +45,20 @@
                         x-transition:leave="opacity-100"
                         x-transition:leave-end="opacity-0"
                     >
-                        <!-- Background with Dot Pattern -->
-                        <div class="absolute inset-0 bg-zinc-900">
+                        <!-- Background with Dot Pattern (Theme Aware) -->
+                        <div class="absolute inset-0 bg-zinc-100 dark:bg-zinc-900">
                             <!-- Dot Pattern -->
-                            <div class="absolute inset-0 opacity-20" 
-                                 style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;">
+                            <div class="absolute inset-0 opacity-10 dark:opacity-20" 
+                                 style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px; color: var(--tw-prose-body);">
                             </div>
                             
                             <!-- Vignette/Gradient Overlay for Depth -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-zinc-900/40 to-zinc-900/10"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-100/90 via-zinc-100/40 to-zinc-100/10 dark:from-zinc-900/90 dark:via-zinc-900/40 dark:to-zinc-900/10"></div>
                         </div>
 
                         <!-- Text Content -->
                         <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 md:px-12">
-                            <h1 class="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-6 uppercase tracking-wider leading-tight shadow-sm" 
+                            <h1 class="text-3xl md:text-5xl lg:text-7xl font-bold text-zinc-900 dark:text-white mb-6 uppercase tracking-wider leading-tight shadow-sm" 
                                 x-html="slide.title"
                                 x-show="activeSlide === index"
                                 x-transition:enter="transition ease-out duration-700 delay-300"
@@ -66,7 +66,7 @@
                                 x-transition:enter-end="opacity-100 translate-y-0"
                             ></h1>
                             
-                            <p class="text-base md:text-xl text-zinc-200 mb-8 max-w-2xl shadow-sm" 
+                            <p class="text-base md:text-xl text-zinc-700 dark:text-zinc-200 mb-8 max-w-2xl shadow-sm" 
                             x-text="slide.subtitle"
                             x-show="activeSlide === index"
                             x-transition:enter="transition ease-out duration-700 delay-500"
@@ -79,7 +79,7 @@
                                 x-transition:enter-start="opacity-0 scale-90"
                                 x-transition:enter-end="opacity-100 scale-100"
                             >
-                                <a :href="slide.link || '#'" class="inline-block bg-white text-black px-8 py-3 md:px-10 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-zinc-200 transition-colors shadow-xl transform hover:scale-105 active:scale-95 duration-200">
+                                <a :href="slide.link || '#'" class="inline-block bg-zinc-900 dark:bg-white text-white dark:text-black px-8 py-3 md:px-10 md:py-4 rounded-full font-bold text-base md:text-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors shadow-xl transform hover:scale-105 active:scale-95 duration-200">
                                     <span x-text="slide.button_text || 'Shop Now'"></span>
                                 </a>
                             </div>
