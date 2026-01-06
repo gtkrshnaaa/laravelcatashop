@@ -22,7 +22,6 @@
             <thead>
                 <tr class="border-b border-border bg-background/50">
                     <th class="px-6 py-4 font-medium text-secondary">Position</th>
-                    <th class="px-6 py-4 font-medium text-secondary">Image</th>
                     <th class="px-6 py-4 font-medium text-secondary">Title & Subtitle</th>
                     <th class="px-6 py-4 font-medium text-secondary">Status</th>
                     <th class="px-6 py-4 font-medium text-secondary text-right">Actions</th>
@@ -33,11 +32,6 @@
                     <tr class="hover:bg-background/50 transition-colors">
                         <td class="px-6 py-4 text-primary font-medium">
                             #{{ $banner->position }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="w-24 h-12 rounded-lg overflow-hidden bg-background border border-border">
-                                <img src="{{ Storage::url($banner->image) }}" alt="Banner" class="w-full h-full object-cover">
-                            </div>
                         </td>
                         <td class="px-6 py-4 max-w-md">
                             <div class="font-medium text-primary line-clamp-1" title="{{ strip_tags($banner->title) }}">
@@ -77,7 +71,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-12 text-center text-secondary">
+                        <td colspan="4" class="px-6 py-12 text-center text-secondary">
                             No banners found. Create one to get started.
                         </td>
                     </tr>
