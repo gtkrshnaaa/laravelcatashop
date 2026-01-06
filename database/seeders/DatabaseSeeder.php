@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             TransactionSeeder::class,
             ReviewSeeder::class,
             TagSeeder::class,
+            BannerSeeder::class,
         ]);
     }
 }
