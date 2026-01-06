@@ -177,7 +177,9 @@
                             file:cursor-pointer cursor-pointer">
                     </div>
 
-                    <button type="submit" class="bg-primary text-background px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity">Submit Review</button>
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-primary text-background px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity">Submit Review</button>
+                    </div>
                 </form>
             </div>
 
