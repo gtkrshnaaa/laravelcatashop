@@ -21,8 +21,8 @@ class DashboardController extends Controller
             'total_products' => Product::count(),
             'total_transactions' => Transaction::count(),
             'pending_transactions' => Transaction::where('status', 'unpaid')->count(),
-            'total_revenue' => Transaction::where('status', '!=', 'cancelled')
-                ->sum('amount_subtotal'),
+            'total_revenue' => Transaction::whereIn('status', ['paid', 'shipped', 'completed'])
+                ->sum('amount_total'),
         ];
 
         $recentOrders = Transaction::with('items.product')
