@@ -15,17 +15,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Cache metrics for 10 minutes
-        $metrics = Cache::remember('admin.dashboard.metrics', 600, function () {
-            return [
-                'total_categories' => Category::count(),
-                'total_products' => Product::count(),
-                'total_transactions' => Transaction::count(),
-                'pending_transactions' => Transaction::where('status', 'unpaid')->count(),
-                'total_revenue' => Transaction::where('status', '!=', 'cancelled')
-                    ->sum('amount_subtotal'),
-            ];
-        });
+        // Real-time metrics (no cache for instant updates)
+        $metrics = [
+            'total_categories' => Category::count(),
+            'total_products' => Product::count(),
+            'total_transactions' => Transaction::count(),
+            'pending_transactions' => Transaction::where('status', 'unpaid')->count(),
+            'total_revenue' => Transaction::where('status', '!=', 'cancelled')
+                ->sum('amount_subtotal'),
+        ];
 
         $recentOrders = Transaction::with('items.product')
             ->latest()
