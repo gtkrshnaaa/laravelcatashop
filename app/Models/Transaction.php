@@ -22,6 +22,9 @@ class Transaction extends Model
         'paid_at',
         'shipped_at',
         'completed_at',
+        'courier_name',
+        'tracking_number',
+        'estimated_delivery',
     ];
 
     protected $casts = [
