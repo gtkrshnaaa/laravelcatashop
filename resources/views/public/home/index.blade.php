@@ -45,12 +45,11 @@
                         x-transition:leave="opacity-100"
                         x-transition:leave-end="opacity-0"
                     >
-                        <!-- Background Image -->
-                        <div class="absolute inset-0">
-                            <img :src="'/storage/' + slide.image" 
-                                class="w-full h-full object-cover"
-                                onerror="this.onerror=null; this.src='https://placehold.co/1200x600/18181b/ffffff?text=Image+Not+Found';">
-                            <div class="absolute inset-0 bg-black/50"></div> <!-- Dark overlay -->
+                        <!-- Background Gradient (No Image) -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-zinc-900 via-neutral-900 to-stone-900">
+                            <!-- Optional Mesh/Abstract Pattern -->
+                            <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent"></div>
                         </div>
 
                         <!-- Text Content -->
