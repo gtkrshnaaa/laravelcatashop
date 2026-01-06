@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Catalog\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,11 +24,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // Catalog Routes (to be implemented in Phase 3 & 4)
-        // Route::prefix('catalog')->name('catalog.')->group(function () {
-        //     Route::resource('categories', CategoryController::class);
-        //     Route::resource('products', ProductController::class);
-        // });
+        // Catalog Routes
+        Route::prefix('catalog')->name('catalog.')->group(function () {
+            Route::resource('categories', CategoryController::class);
+            // Route::resource('products', ProductController::class); // Phase 4
+        });
 
         // Order Routes (to be implemented in Phase 7)
         // Route::prefix('order')->name('order.')->group(function () {
