@@ -3,52 +3,98 @@
 @section('title', 'Welcome to CataShop')
 
 @section('content')
-    <!-- Hero Section with Carousel -->
-    <section class="relative pt-24 pb-0 md:pt-32 md:pb-0 overflow-hidden mb-0" x-data="{ activeSlide: 0, slides: {{ $banners->toJson() }}, init() { setInterval(() => { this.activeSlide = (this.activeSlide + 1) % this.slides.length }, 5000) } }">
-        <!-- Background Overlay -->
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-800/20 via-background to-background opacity-40"></div>
-        
-        <div class="container mx-auto px-4 relative z-10 text-center min-h-[500px] flex flex-col justify-center items-center">
-            
-            <!-- Slides Container -->
-            <div class="relative w-full max-w-7xl mx-auto h-[400px] md:h-[500px]">
-                <template x-for="(slide, index) in slides" :key="index">
-                    <div class="absolute inset-0 flex flex-col justify-center items-center transition-all duration-700 ease-in-out"
-                         x-show="activeSlide === index"
-                         x-transition:enter="opacity-0 translate-y-8"
-                         x-transition:enter-end="opacity-100 translate-y-0"
-                         x-transition:leave="opacity-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 -translate-y-8" 
+    <!-- Hero Section with Robust Carousel -->
+    <section class="relative h-[600px] overflow-hidden" x-data="{
+        activeSlide: 0,
+        slides: {{ $banners->toJson() }},
+        timer: null,
+        init() {
+            this.startTimer();
+        },
+        startTimer() {
+            this.timer = setInterval(() => {
+                this.next();
+            }, 6000);
+        },
+        resetTimer() {
+            clearInterval(this.timer);
+            this.startTimer();
+        },
+        next() {
+            this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+        },
+        prev() {
+            this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length;
+        },
+        goTo(index) {
+            this.activeSlide = index;
+            this.resetTimer();
+        }
+    }">
+        <!-- Slides -->
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+                 x-show="activeSlide === index"
+                 x-transition:enter="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="opacity-100"
+                 x-transition:leave-end="opacity-0"
+            >
+                <!-- Background Image -->
+                <div class="absolute inset-0">
+                    <img :src="'/storage/' + slide.image" 
+                         class="w-full h-full object-cover"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1200x600/18181b/ffffff?text=Image+Not+Found';">
+                    <div class="absolute inset-0 bg-black/60"></div> <!-- Dark overlay -->
+                </div>
+
+                <!-- Text Content -->
+                <div class="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 uppercase tracking-wider leading-tight" 
+                        x-html="slide.title"
+                        x-show="activeSlide === index"
+                        x-transition:enter="transition ease-out duration-700 delay-300"
+                        x-transition:enter-start="opacity-0 translate-y-8"
+                        x-transition:enter-end="opacity-100 translate-y-0"
+                    ></h1>
+                    
+                    <p class="text-lg md:text-xl text-zinc-300 mb-8 max-w-2xl" 
+                       x-text="slide.subtitle"
+                       x-show="activeSlide === index"
+                       x-transition:enter="transition ease-out duration-700 delay-500"
+                       x-transition:enter-start="opacity-0 translate-y-4"
+                       x-transition:enter-end="opacity-100 translate-y-0"
+                    ></p>
+
+                    <div x-show="activeSlide === index"
+                         x-transition:enter="transition ease-out duration-700 delay-700"
+                         x-transition:enter-start="opacity-0 scale-90"
+                         x-transition:enter-end="opacity-100 scale-100"
                     >
-                        <!-- Banner Image (Background or Inline) -->
-                        <div class="absolute inset-0 z-0 rounded-3xl overflow-hidden opacity-50">
-                            <img :src="'/storage/' + slide.image" 
-                                 class="w-full h-full object-cover"
-                                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/18181b/ffffff?text=Image+Not+Found'; console.error('Image failed to load:', this.src)">
-                            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-                        </div>
-
-                        <div class="relative z-10 max-w-4xl px-4">
-                            <h1 class="text-4xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-primary mb-6 leading-tight" x-html="slide.title"></h1>
-                            <p class="text-lg md:text-2xl text-secondary mb-8" x-text="slide.subtitle"></p>
-                            
-                            <a :href="slide.link || '#'" class="inline-block bg-primary text-background px-8 py-4 rounded-full font-bold text-lg hover:opacity-90 transition-transform transform hover:scale-105 shadow-lg shadow-primary/20">
-                                <span x-text="slide.button_text || 'Shop Now'"></span>
-                            </a>
-                        </div>
+                        <a :href="slide.link || '#'" class="inline-block bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-zinc-200 transition-colors shadow-xl">
+                            <span x-text="slide.button_text || 'Shop Now'"></span>
+                        </a>
                     </div>
-                </template>
+                </div>
             </div>
+        </template>
 
-            <!-- Carousel Indicators -->
-            <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
-                <template x-for="(slide, index) in slides" :key="index">
-                    <button @click="activeSlide = index" 
-                            class="w-3 h-3 rounded-full transition-all duration-300"
-                            :class="activeSlide === index ? 'bg-primary w-8' : 'bg-secondary/30 hover:bg-primary/50'">
-                    </button>
-                </template>
-            </div>
+        <!-- Navigation Buttons -->
+        <button @click="prev(); resetTimer()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-sm transition-colors hidden md:block">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+        </button>
+        <button @click="next(); resetTimer()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-sm transition-colors hidden md:block">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+        </button>
+
+        <!-- Indicators -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+            <template x-for="(slide, index) in slides" :key="index">
+                <button @click="goTo(index)" 
+                        class="h-1 rounded-full transition-all duration-300"
+                        :class="activeSlide === index ? 'bg-white w-8' : 'bg-white/30 w-4 hover:bg-white/50'">
+                </button>
+            </template>
         </div>
     </section>
 
