@@ -118,5 +118,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Banner Management Routes
         Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
+
+        // Flash Sale Settings Routes
+        Route::get('flash-sale-settings', [\App\Http\Controllers\Admin\FlashSaleSettingController::class, 'edit'])->name('flashSale.edit');
+        Route::put('flash-sale-settings', [\App\Http\Controllers\Admin\FlashSaleSettingController::class, 'update'])->name('flashSale.update');
     });
 });

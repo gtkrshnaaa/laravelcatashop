@@ -128,6 +128,9 @@
                 <a href="{{ route('admin.banners.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.banners.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
                     Banners
                 </a>
+                <a href="{{ route('admin.flashSale.edit') }}" class="block px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.flashSale.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
+                    Flash Sale Settings
+                </a>
             </nav>
         </div>
 
