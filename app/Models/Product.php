@@ -56,6 +56,38 @@ class Product extends Model
     }
 
     /**
+     * Get the reviews for the product.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    /**
+     * Get approved reviews only.
+     */
+    public function approvedReviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class)->where('status', 'approved');
+    }
+
+    /**
+     * Get average rating.
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->approvedReviews()->avg('rating') ?? 0;
+    }
+
+    /**
+     * Get total review count.
+     */
+    public function getReviewCountAttribute()
+    {
+        return $this->approvedReviews()->count();
+    }
+
+    /**
      * Scope a query to only include active products.
      */
     public function scopeActive(Builder $query): void
