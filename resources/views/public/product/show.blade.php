@@ -140,22 +140,44 @@
                 <form action="{{ route('reviews.store', $product) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @guest('customer')
-                        <input type="text" name="name" placeholder="Your Name" class="w-full bg-background border border-border rounded-lg px-4 py-3 text-primary mb-4" required>
+                        <input type="text" name="name" placeholder="Your Name" class="w-full bg-background border border-border rounded-lg px-4 py-3 text-primary mb-4 focus:ring-1 focus:ring-primary focus:border-primary transition-colors outline-none" required>
                     @endguest
-                    <div class="mb-4">
+                    
+                    <div class="mb-4" x-data="{ rating: 0, hover: 0 }">
                         <label class="block text-sm font-medium text-secondary mb-2">Rating *</label>
-                        <div class="flex gap-2">
+                        <div class="flex gap-1" @mouseleave="hover = 0">
                             @for($i = 1; $i <= 5; $i++)
-                                <input type="radio" name="rating" value="{{ $i }}" id="rating{{ $i }}" required class="hidden peer/rating{{ $i }}">
-                                <label for="rating{{ $i }}" class="cursor-pointer text-3xl text-secondary peer-checked/rating{{ $i }}:text-yellow-400 hover:text-yellow-400">★</label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="rating" value="{{ $i }}" class="hidden" @click="rating = {{ $i }}" required>
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                        viewBox="0 0 24 24" 
+                                        fill="currentColor" 
+                                        class="w-8 h-8 transition-colors duration-200"
+                                        :class="(hover >= {{ $i }} || (!hover && rating >= {{ $i }})) ? 'text-yellow-400' : 'text-zinc-600'"
+                                        @mouseenter="hover = {{ $i }}"
+                                    >
+                                        <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                                    </svg>
+                                </label>
                             @endfor
                         </div>
                     </div>
-                    <textarea name="review" rows="4" placeholder="Share your experience..." class="w-full bg-background border border-border rounded-lg px-4 py-3 text-primary mb-4" required></textarea>
-                    <input type="file" name="images[]" multiple accept="image/*" class="mb-4">
-                    <button type="submit" class
 
-="bg-primary text-background px-6 py-3 rounded-lg font-bold hover:opacity-90">Submit Review</button>
+                    <textarea name="review" rows="4" placeholder="Share your experience..." class="w-full bg-background border border-border rounded-lg px-4 py-3 text-primary mb-4 focus:ring-1 focus:ring-primary focus:border-primary transition-colors outline-none" required></textarea>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-secondary mb-2">Photos (Optional)</label>
+                        <input type="file" name="images[]" multiple accept="image/*" 
+                            class="block w-full text-sm text-secondary
+                            file:mr-4 file:py-2.5 file:px-4
+                            file:rounded-full file:border-0
+                            file:text-xs file:font-semibold
+                            file:bg-primary file:text-background
+                            hover:file:bg-primary/90
+                            file:cursor-pointer cursor-pointer">
+                    </div>
+
+                    <button type="submit" class="bg-primary text-background px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity">Submit Review</button>
                 </form>
             </div>
 
