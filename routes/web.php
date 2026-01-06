@@ -43,6 +43,9 @@ Route::get('/invoice/{transaction}', [InvoiceController::class, 'show'])->name('
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::post('/reviews/{review}/helpful', [ReviewController::class, 'markHelpful'])->name('reviews.markHelpful');
 
+// Wishlist Route
+Route::post('/wishlist/toggle', [App\Http\Controllers\Public\WishlistController::class, 'toggle'])->name('wishlist.toggle');
+
 // Customer Routes
 Route::prefix('customer')->name('customer.')->group(function () {
     // Guest only
