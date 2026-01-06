@@ -45,11 +45,15 @@
                         x-transition:leave="opacity-100"
                         x-transition:leave-end="opacity-0"
                     >
-                        <!-- Background Gradient (No Image) -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-zinc-900 via-neutral-900 to-stone-900">
-                            <!-- Optional Mesh/Abstract Pattern -->
-                            <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
-                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent"></div>
+                        <!-- Background with Dot Pattern -->
+                        <div class="absolute inset-0 bg-zinc-900">
+                            <!-- Dot Pattern -->
+                            <div class="absolute inset-0 opacity-20" 
+                                 style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;">
+                            </div>
+                            
+                            <!-- Vignette/Gradient Overlay for Depth -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-zinc-900/40 to-zinc-900/10"></div>
                         </div>
 
                         <!-- Text Content -->
