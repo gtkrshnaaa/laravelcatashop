@@ -37,16 +37,37 @@
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="font-bold text-primary">Categories</h3>
                         </div>
-                        <div class="space-y-2">
+                        <div class="space-y-3">
+                            <!-- All Categories Option -->
                             <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="radio" name="category" value="" class="w-4 h-4 text-primary bg-background border-border focus:ring-primary" {{ !request('category') ? 'checked' : '' }} onchange="this.form.submit()">
-                                <span class="text-secondary group-hover:text-primary transition-colors text-sm">All Categories</span>
+                                <input type="radio" name="category" value="" class="peer sr-only" {{ !request('category') ? 'checked' : '' }} onchange="this.form.submit()">
+                                
+                                <!-- Custom Radio UI -->
+                                <div class="w-5 h-5 rounded-full border-2 border-zinc-700 bg-zinc-900 peer-checked:border-white peer-checked:bg-white flex items-center justify-center transition-all group-hover:border-zinc-500 shadow-sm">
+                                    <div class="w-2 h-2 rounded-full bg-black transform scale-0 peer-checked:scale-100 transition-transform duration-200"></div>
+                                </div>
+
+                                <span class="text-zinc-400 font-medium group-hover:text-white peer-checked:text-white peer-checked:font-bold transition-colors text-sm">All Categories</span>
                             </label>
+
+                            <!-- Dynamic Categories -->
                             @foreach($categories as $cat)
-                                <label class="flex items-center gap-3 cursor-pointer group">
-                                    <input type="radio" name="category" value="{{ $cat->id }}" class="w-4 h-4 text-primary bg-background border-border focus:ring-primary" {{ request('category') == $cat->id ? 'checked' : '' }} onchange="this.form.submit()">
-                                    <span class="text-secondary group-hover:text-primary transition-colors text-sm flex-1">{{ $cat->name }}</span>
-                                    <span class="text-xs text-secondary bg-background px-2 py-0.5 rounded-full border border-border">{{ $cat->products_count }}</span>
+                                <label class="flex items-center justify-between cursor-pointer group">
+                                    <div class="flex items-center gap-3">
+                                        <input type="radio" name="category" value="{{ $cat->id }}" class="peer sr-only" {{ request('category') == $cat->id ? 'checked' : '' }} onchange="this.form.submit()">
+                                        
+                                        <!-- Custom Radio UI -->
+                                        <div class="w-5 h-5 rounded-full border-2 border-zinc-700 bg-zinc-900 peer-checked:border-white peer-checked:bg-white flex items-center justify-center transition-all group-hover:border-zinc-500 shadow-sm">
+                                            <div class="w-2 h-2 rounded-full bg-black transform scale-0 peer-checked:scale-100 transition-transform duration-200"></div>
+                                        </div>
+
+                                        <span class="text-zinc-400 group-hover:text-white peer-checked:text-white peer-checked:font-medium transition-colors text-sm">{{ $cat->name }}</span>
+                                    </div>
+                                    
+                                    <!-- Count Badge -->
+                                    <span class="text-[10px] font-bold text-zinc-500 bg-zinc-900 px-2 py-0.5 rounded-full border border-zinc-800 group-hover:border-zinc-700 transition-colors">
+                                        {{ $cat->products_count }}
+                                    </span>
                                 </label>
                             @endforeach
                         </div>
