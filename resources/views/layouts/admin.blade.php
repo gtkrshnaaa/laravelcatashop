@@ -102,9 +102,7 @@
                     Dashboard
                 </a>
 
-                <div class="pt-4 pb-2">
-                    <p class="px-4 text-xs font-bold text-secondary uppercase tracking-wider">Catalog</p>
-                </div>
+
 
                 <a href="{{ route('admin.catalog.categories.index') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.catalog.categories.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -119,9 +117,7 @@
                     Products
                 </a>
 
-                <div class="pt-4 pb-2">
-                    <p class="px-4 text-xs font-bold text-secondary uppercase tracking-wider">Orders</p>
-                </div>
+
 
                 <a href="{{ route('admin.order.transactions.index') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.order.transactions.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -130,9 +126,7 @@
                     Transactions
                 </a>
 
-                <div class="pt-4 pb-2">
-                    <p class="px-4 text-xs font-bold text-secondary uppercase tracking-wider">Content</p>
-                </div>
+
 
                 <a href="{{ route('admin.reviews.index') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('admin.reviews.*') ? 'bg-primary text-background' : 'text-secondary hover:text-primary hover:bg-secondary/10' }} transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
