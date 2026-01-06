@@ -62,6 +62,7 @@ Route::prefix('customer')->name('customer.')->group(function () {
         Route::prefix('orders')->name('orders.')->group(function () {
             Route::get('/', [OrderController::class, 'index'])->name('index');
             Route::get('/{transaction}', [OrderController::class, 'show'])->name('show');
+            Route::post('/{transaction}/upload-proof', [OrderController::class, 'uploadProof'])->name('uploadProof');
         });
         
         // Addresses
