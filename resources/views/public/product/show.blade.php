@@ -33,7 +33,39 @@
                     <a href="{{ route('catalog.index', ['category' => $product->category_id]) }}" class="text-sm text-secondary hover:text-primary transition-colors">
                         {{ $product->category->name }}
                     </a>
-                    <h1 class="text-4xl font-bold text-primary mt-2 mb-4">{{ $product->name }}</h1>
+                    <div class="flex items-start justify-between gap-4">
+                        <h1 class="text-4xl font-bold text-primary mt-2 mb-4">{{ $product->name }}</h1>
+                        
+                        <!-- Wishlist Button -->
+                        <div x-data="{ wishlisted: {{ json_encode(auth('customer')->user() ? auth('customer')->user()->wishlists()->pluck('product_id')->contains($product->id) : false) }} }">
+                            <script>
+                                window.addEventListener('wishlist-updated', event => {
+                                    if(event.detail.productId == {{ $product->id }}) {
+                                        this.wishlisted = event.detail.status === 'added';
+                                    }
+                                });
+                            </script>
+
+                            <div x-data="wishlist">
+                                <button 
+                                    @click="toggle({{ $product->id }}); wishlisted = !wishlisted"
+                                    class="mt-2 bg-surface p-3 rounded-full border border-border hover:bg-surface/80 transition-all shadow-sm group/btn"
+                                    :class="{ 'text-red-500 border-red-500/30': wishlisted }"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                        :fill="wishlisted ? 'currentColor' : 'none'" 
+                                        viewBox="0 0 24 24" 
+                                        stroke-width="1.5" 
+                                        stroke="currentColor" 
+                                        class="w-6 h-6 transition-transform group-hover/btn:scale-110"
+                                        :class="{ 'text-red-500': wishlisted }"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.008 11.525c.03.693-.069 1.341-.274 1.948-1.558 4.673-8.736 9.387-8.736 9.387S4.852 18.146 3.294 13.473c-.205-.607-.304-1.255-.274-1.948 0-2.834 2.128-5.132 4.965-5.32 2.373-.157 4.542 1.543 4.965 3.664.423-2.121 2.592-3.821 4.965-3.664 2.837.188 4.965 2.486 4.965 5.32z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <p class="text-xs text-secondary font-mono mb-4">SKU: {{ $product->sku }}</p>
                 </div>
 
