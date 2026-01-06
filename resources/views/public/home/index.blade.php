@@ -101,6 +101,7 @@
     </section>
 
     <!-- Flash Sale / Scarcity Section -->
+    @if($flashSale->is_active)
     <section class="py-12 bg-background">
         <div class="container mx-auto px-4">
             <div class="bg-surface border border-border rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-2xl shadow-primary/5">
@@ -113,26 +114,27 @@
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                           <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                         </span>
-                        <h3 class="text-sm font-bold text-red-500 tracking-wider uppercase">Flash Sale Ends Soon</h3>
+                        <h3 class="text-sm font-bold text-red-500 tracking-wider uppercase">{{ $flashSale->badge_text }}</h3>
                     </div>
-                    <h2 class="text-3xl font-bold text-primary mb-2">Weekly Special Offer</h2>
-                    <p class="text-secondary">Don't miss out on our limited time deals. Prices reset every Monday!</p>
+                    <h2 class="text-3xl font-bold text-primary mb-2">{{ $flashSale->title }}</h2>
+                    <p class="text-secondary">{{ $flashSale->description }}</p>
                 </div>
 
                 <div class="w-full md:w-1/3">
                     <div class="flex items-end justify-between mb-2">
-                        <span class="text-xs font-mono text-primary font-bold">{{ $usedSlots }} SOLD</span>
-                        <span class="text-xs font-mono {{ $slotsRemaining > 10 ? 'text-green-500' : 'text-red-500' }}">
-                            {{ $slotsRemaining }} REMAINING
+                        <span class="text-xs font-mono text-primary font-bold">{{ $flashSaleStats['used'] }} SOLD</span>
+                        <span class="text-xs font-mono {{ $flashSaleStats['remaining'] > 10 ? 'text-green-500' : 'text-red-500' }}">
+                            {{ $flashSaleStats['remaining'] }} REMAINING
                         </span>
                     </div>
                     <div class="w-full bg-background border border-border rounded-full h-4 overflow-hidden relative">
-                         <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-orange-400 to-red-600 transition-all duration-1000 ease-out" style="width: {{ ($usedSlots / $weeklyLimit) * 100 }}%"></div>
+                         <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-orange-400 to-red-600 transition-all duration-1000 ease-out" style="width: {{ min(100, $flashSaleStats['percentage']) }}%"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Service Features -->
     <section class="py-12">

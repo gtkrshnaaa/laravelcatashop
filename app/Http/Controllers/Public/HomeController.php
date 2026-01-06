@@ -25,10 +25,9 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        // Stats for "Flash Sale" / Scarcity logic
-        $weeklyLimit = 50;
-        $usedSlots = \App\Models\Transaction::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
-        $slotsRemaining = max(0, $weeklyLimit - $usedSlots);
+        // Flash Sale Settings
+        $flashSale = \App\Models\FlashSaleSetting::getSettings();
+        $flashSaleStats = $flashSale->getSlotStats();
 
         // Service Features (Static for now)
         $serviceFeatures = [
@@ -56,9 +55,8 @@ class HomeController extends Controller
             'banners', 
             'featuredCategories', 
             'featuredProducts', 
-            'weeklyLimit', 
-            'usedSlots', 
-            'slotsRemaining',
+            'flashSale',
+            'flashSaleStats',
             'serviceFeatures'
         ));
     }
