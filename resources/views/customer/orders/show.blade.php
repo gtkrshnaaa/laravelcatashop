@@ -59,6 +59,34 @@
                                 <p class="font-medium text-primary">{{ $transaction->created_at->format('d M Y, H:i') }}</p>
                             </div>
                         </div>
+
+                        <!-- Payment Proof Section -->
+                        @if($transaction->payment_method === 'bank_transfer')
+                            <div class="mt-6 pt-6 border-t border-border">
+                                <h4 class="font-bold text-primary mb-2 text-sm">Payment Proof</h4>
+                                
+                                @if($transaction->payment_proof_path)
+                                    <div class="mb-4">
+                                        <p class="text-green-500 text-xs font-bold mb-2">✓ Proof Uploaded</p>
+                                        <img src="{{ Storage::url($transaction->payment_proof_path) }}" alt="Payment Proof" class="w-full rounded-lg border border-border">
+                                    </div>
+                                @else
+                                    <form action="{{ route('customer.orders.uploadProof', $transaction) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <input type="file" name="payment_proof" accept="image/*" class="w-full text-xs text-secondary file:mr-2 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                                            @error('payment_proof')
+                                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <button type="submit" class="w-full bg-primary text-background px-4 py-2 rounded-lg font-bold hover:opacity-90 transition-opacity text-sm">
+                                            Upload Proof
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                        @endif
+
                         <a href="{{ route('customer.orders.index') }}" class="block w-full text-center mt-4 text-secondary hover:text-primary transition-colors text-sm">
                             ← Back to Orders
                         </a>
