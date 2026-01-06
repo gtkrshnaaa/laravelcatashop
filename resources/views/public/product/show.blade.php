@@ -86,6 +86,79 @@
             </div>
         </div>
 
+        <!-- Reviews Section -->
+        <div class="border-t border-border pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-primary">Customer Reviews</h2>
+                @if($product->review_count > 0)
+                    <div class="flex items-center gap-2">
+                        <div class="flex">
+                            @for($i = 1; $i <= 5; $i++)
+                                <span class="{{ $i <= round($product->average_rating) ? 'text-yellow-400' : 'text-secondary' }} text-xl">★</span>
+                            @endfor
+                        </div>
+                        <span class="text-secondary text-sm">({{ $product->review_count }} reviews)</span>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Review Form -->
+            <div class="bg-surface border border-border rounded-xl p-6 mb-8">
+                <h3 class="font-bold text-primary mb-4">Write a Review</h3>
+                <form action="{{ route('reviews.store', $product) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @guest('customer')
+                        <input type="text" name="name" placeholder="Your Name" class="w-full bg-background border border-border rounded-lg px-4 py-3 text-primary mb-4" required>
+                    @endguest
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-secondary mb-2">Rating *</label>
+                        <div class="flex gap-2">
+                            @for($i = 1; $i <= 5; $i++)
+                                <input type="radio" name="rating" value="{{ $i }}" id="rating{{ $i }}" required class="hidden peer/rating{{ $i }}">
+                                <label for="rating{{ $i }}" class="cursor-pointer text-3xl text-secondary peer-checked/rating{{ $i }}:text-yellow-400 hover:text-yellow-400">★</label>
+                            @endfor
+                        </div>
+                    </div>
+                    <textarea name="review" rows="4" placeholder="Share your experience..." class="w-full bg-background border border-border rounded-lg px-4 py-3 text-primary mb-4" required></textarea>
+                    <input type="file" name="images[]" multiple accept="image/*" class="mb-4">
+                    <button type="submit" class
+
+="bg-primary text-background px-6 py-3 rounded-lg font-bold hover:opacity-90">Submit Review</button>
+                </form>
+            </div>
+
+            <!-- Approved Reviews -->
+            <div class="space-y-4">
+                @forelse($product->approvedReviews as $review)
+                    <div class="bg-surface border border-border rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="font-bold text-primary">{{ $review->reviewer_name }}</p>
+                            <div class="flex gap-1">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <span class="{{ $i <= $review->rating ? 'text-yellow-400' : 'text-secondary' }}">★</span>
+                                @endfor
+                            </div>
+                        </div>
+                        <p class="text-xs text-secondary mb-3">{{ $review->created_at->format('d M Y') }}</p>
+                        <p class="text-primary mb-3">{{ $review->review }}</p>
+                        @if($review->images)
+                            <div class="flex gap-2 mb-3">
+                                @foreach($review->images as $image)
+                                    <img src="{{ asset('storage/' . $image) }}" alt="Review" class="w-20 h-20 object-cover rounded">
+                                @endforeach
+                            </div>
+                        @endif
+                        <form action="{{ route('reviews.markHelpful', $review) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="text-xs text-secondary hover:text-primary">Helpful ({{ $review->helpful_count }})</button>
+                        </form>
+                    </div>
+                @empty
+                    <p class="text-center py-8 text-secondary">No reviews yet. Be the first to review!</p>
+                @endforelse
+            </div>
+        </div>
+
         <!-- Related Products -->
         @if($relatedProducts->count() > 0)
             <div class="border-t border-border pt-12">
