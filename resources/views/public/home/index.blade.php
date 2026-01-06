@@ -22,7 +22,9 @@
                     >
                         <!-- Banner Image (Background or Inline) -->
                         <div class="absolute inset-0 z-0 rounded-3xl overflow-hidden opacity-50">
-                            <img :src="'/storage/' + slide.image" class="w-full h-full object-cover">
+                            <img :src="'/storage/' + slide.image" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/18181b/ffffff?text=Image+Not+Found'; console.error('Image failed to load:', this.src)">
                             <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
                         </div>
 
@@ -212,19 +214,19 @@
     <!-- Bottom CTA -->
     <section class="py-20 mb-12">
         <div class="container mx-auto px-4">
-            <div class="relative overflow-hidden rounded-3xl bg-primary px-8 py-12 md:px-12 md:py-16 text-center shadow-2xl shadow-primary/20">
+            <div class="relative overflow-hidden rounded-3xl bg-zinc-900 px-8 py-12 md:px-12 md:py-16 text-center shadow-2xl shadow-zinc-900/20">
                  <!-- Background Gradients -->
-                 <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-blue-400 to-purple-400 blur-3xl opacity-50 rounded-full pointer-events-none"></div>
-                 <div class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tl from-yellow-400 to-orange-400 blur-3xl opacity-50 rounded-full pointer-events-none"></div>
+                 <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-blue-500 to-purple-600 blur-3xl opacity-40 rounded-full pointer-events-none"></div>
+                 <div class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tl from-yellow-500 to-orange-500 blur-3xl opacity-40 rounded-full pointer-events-none"></div>
 
                 <div class="relative z-10 max-w-2xl mx-auto">
-                    <h2 class="text-3xl font-bold tracking-tight text-background sm:text-4xl mb-4">
+                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl mb-4">
                         Ready to start shopping?
                     </h2>
-                    <p class="text-lg text-background/80 mb-8">
+                    <p class="text-lg text-zinc-300 mb-8">
                         Join thousands of satisfied customers and experience the best e-commerce platform built with Laravel.
                     </p>
-                    <a href="{{ route('catalog.index') }}" class="inline-block bg-background text-primary px-8 py-4 rounded-full font-bold hover:bg-surface transition-colors transform hover:scale-105 shadow-lg">
+                    <a href="{{ route('catalog.index') }}" class="inline-block bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-zinc-100 transition-colors transform hover:scale-105 shadow-lg">
                         Browse Full Catalog
                     </a>
                 </div>
