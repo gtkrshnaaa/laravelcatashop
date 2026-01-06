@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Catalog\CategoryController;
 use App\Http\Controllers\Admin\Catalog\ProductController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Order\TransactionController;
+use App\Http\Controllers\Admin\Review\ReviewModerationController;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\Auth\LoginController as CustomerLoginController;
 use App\Http\Controllers\Customer\Auth\RegisterController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Public\CheckoutController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\InvoiceController;
 use App\Http\Controllers\Public\ProductController as PublicProductController;
+use App\Http\Controllers\Public\Review\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
@@ -36,6 +38,10 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 
 // Invoice Routes
 Route::get('/invoice/{transaction}', [InvoiceController::class, 'show'])->name('invoice.show');
+
+// Review Routes
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/reviews/{review}/helpful', [ReviewController::class, 'markHelpful'])->name('reviews.markHelpful');
 
 // Customer Routes
 Route::prefix('customer')->name('customer.')->group(function () {
@@ -96,6 +102,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
             Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
             Route::patch('/transactions/{transaction}/status', [TransactionController::class, 'updateStatus'])->name('transactions.updateStatus');
+        });
+
+        // Review Moderation Routes
+        Route::prefix('reviews')->name('reviews.')->group(function () {
+            Route::get('/', [ReviewModerationController::class, 'index'])->name('index');
+            Route::post('/{review}/approve', [ReviewModerationController::class, 'approve'])->name('approve');
+            Route::post('/{review}/reject', [ReviewModerationController::class, 'reject'])->name('reject');
+            Route::delete('/{review}', [ReviewModerationController::class, 'destroy'])->name('destroy');
         });
     });
 });
