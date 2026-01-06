@@ -11,13 +11,37 @@ class TransactionController extends Controller
     /**
      * Display a listing of transactions.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = Transaction::with('items')
-            ->latest()
-            ->paginate(20);
+        $query = Transaction::with('items');
 
-        return view('admin.order.transaction.index', compact('transactions'));
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Search by invoice code or customer name
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('invoice_code', 'LIKE', "%{$search}%")
+                  ->orWhereRaw("JSON_EXTRACT(customer_info, '$.name') LIKE ?", ["%{$search}%"]);
+            });
+        }
+
+        $transactions = $query->latest()->paginate(20)->withQueryString();
+
+        // Get counts for each status
+        $statusCounts = [
+            'all' => Transaction::count(),
+            'unpaid' => Transaction::where('status', 'unpaid')->count(),
+            'paid' => Transaction::where('status', 'paid')->count(),
+            'shipped' => Transaction::where('status', 'shipped')->count(),
+            'completed' => Transaction::where('status', 'completed')->count(),
+            'cancelled' => Transaction::where('status', 'cancelled')->count(),
+        ];
+
+        return view('admin.order.transaction.index', compact('transactions', 'statusCounts'));
     }
 
     /**
